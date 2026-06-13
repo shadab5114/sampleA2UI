@@ -1,0 +1,162 @@
+[
+  {
+    "updateComponents": {
+      "surfaceId": "product",
+      "components": [
+        {
+          "id": "root",
+          "component": "Container",
+          "maxWidth": "sm",
+          "py": 3,
+          "children": ["back", "hero", "infoCard", "specs", "actions"]
+        },
+        {
+          "id": "back",
+          "component": "Button",
+          "label": "← Back",
+          "variant": "text",
+          "onPress": { "event": { "name": "go_back" } }
+        },
+        {
+          "id": "hero",
+          "component": "CardMedia",
+          "image": { "path": "/image" },
+          "height": 220
+        },
+        {
+          "id": "infoCard",
+          "component": "Box",
+          "sx": { "mt": 2 },
+          "children": ["brand", "pname", "ratingRow", "priceChip"]
+        },
+        {
+          "id": "brand",
+          "component": "Typography",
+          "variant": "caption",
+          "color": "text.secondary",
+          "text": { "path": "/brand" }
+        },
+        {
+          "id": "pname",
+          "component": "Typography",
+          "variant": "h5",
+          "fontWeight": 700,
+          "text": { "path": "/name" }
+        },
+        {
+          "id": "ratingRow",
+          "component": "Stack",
+          "direction": "row",
+          "spacing": 1,
+          "alignItems": "center",
+          "sx": { "mt": 1 },
+          "children": ["ratingWidget", "ratingLabel"]
+        },
+        {
+          "id": "ratingWidget",
+          "component": "Rating",
+          "value": { "path": "/rating" },
+          "precision": 0.1,
+          "readOnly": true
+        },
+        {
+          "id": "ratingLabel",
+          "component": "Typography",
+          "variant": "body2",
+          "color": "text.secondary",
+          "text": { "path": "/rating" }
+        },
+        {
+          "id": "priceChip",
+          "component": "Chip",
+          "label": { "path": "/priceLabel" },
+          "color": "primary",
+          "variant": "outlined"
+        },
+        {
+          "id": "specs",
+          "component": "Box",
+          "sx": { "mt": 3 },
+          "children": ["specsTitle", "specsDiv", "camRow", "storageRow"]
+        },
+        {
+          "id": "specsTitle",
+          "component": "Typography",
+          "variant": "subtitle1",
+          "fontWeight": 600,
+          "text": "Specifications"
+        },
+        {
+          "id": "specsDiv",
+          "component": "Divider"
+        },
+        {
+          "id": "camRow",
+          "component": "Stack",
+          "direction": "row",
+          "sx": { "mt": 1 },
+          "spacing": 1,
+          "children": ["camLabel", "camVal"]
+        },
+        {
+          "id": "camLabel",
+          "component": "Typography",
+          "variant": "body2",
+          "color": "text.secondary",
+          "text": "Camera"
+        },
+        {
+          "id": "camVal",
+          "component": "Typography",
+          "variant": "body2",
+          "text": { "path": "/camera" }
+        },
+        {
+          "id": "storageRow",
+          "component": "Stack",
+          "direction": "row",
+          "sx": { "mt": 0.5 },
+          "spacing": 1,
+          "children": ["storLabel", "storVal"]
+        },
+        {
+          "id": "storLabel",
+          "component": "Typography",
+          "variant": "body2",
+          "color": "text.secondary",
+          "text": "Storage"
+        },
+        {
+          "id": "storVal",
+          "component": "Typography",
+          "variant": "body2",
+          "text": { "path": "/storage" }
+        },
+        {
+          "id": "actions",
+          "component": "Stack",
+          "sx": { "mt": 4 },
+          "spacing": 2,
+          "children": ["addBtn", "wishBtn"]
+        },
+        {
+          "id": "addBtn",
+          "component": "Button",
+          "label": "Add to Cart",
+          "variant": "contained",
+          "fullWidth": true,
+          "onPress": { "event": { "name": "add_to_cart", "context": { "id": { "path": "/id" } } } }
+        },
+        {
+          "id": "wishBtn",
+          "component": "Button",
+          "label": "Save to Wishlist",
+          "variant": "outlined",
+          "fullWidth": true,
+          "onPress": { "event": { "name": "add_to_wishlist", "context": { "id": { "path": "/id" } } } }
+        }
+      ]
+    }
+  },
+  { "createSurface": { "surfaceId": "product", "root": "root", "catalogId": "mui" } }
+]

@@ -1,0 +1,126 @@
+[
+  {
+    "updateComponents": {
+      "surfaceId": "cart",
+      "components": [
+        {
+          "id": "root",
+          "component": "Container",
+          "maxWidth": "sm",
+          "py": 3,
+          "children": ["title", "itemList", "cartDiv", "totalRow", "checkoutBtn"]
+        },
+        {
+          "id": "title",
+          "component": "Typography",
+          "variant": "h5",
+          "fontWeight": 700,
+          "text": "Your Cart"
+        },
+        {
+          "id": "itemList",
+          "component": "List",
+          "itemsPath": "/items",
+          "itemTemplate": "cartItem",
+          "columns": 1,
+          "spacing": 8
+        },
+        {
+          "id": "cartItem",
+          "component": "Stack",
+          "direction": "row",
+          "spacing": 2,
+          "alignItems": "center",
+          "sx": { "py": 1, "width": "100%" },
+          "children": ["cAvatar", "cInfo", "cPrice", "cRemove"]
+        },
+        {
+          "id": "cAvatar",
+          "component": "Avatar",
+          "src": { "path": "/image" },
+          "alt": { "path": "/name" },
+          "variant": "rounded",
+          "sx": { "width": 48, "height": 48, "bgcolor": "action.hover" }
+        },
+        {
+          "id": "cInfo",
+          "component": "Stack",
+          "spacing": 0,
+          "sx": { "flexGrow": 1 },
+          "children": ["cName", "cQtyLabel"]
+        },
+        {
+          "id": "cName",
+          "component": "Typography",
+          "variant": "body2",
+          "fontWeight": 600,
+          "text": { "path": "/name" }
+        },
+        {
+          "id": "cQtyLabel",
+          "component": "Typography",
+          "variant": "caption",
+          "color": "text.secondary",
+          "text": { "path": "/qtyLabel" }
+        },
+        {
+          "id": "cPrice",
+          "component": "Typography",
+          "variant": "body2",
+          "fontWeight": 700,
+          "text": { "path": "/lineTotal" }
+        },
+        {
+          "id": "cRemove",
+          "component": "Button",
+          "label": "Remove",
+          "variant": "text",
+          "color": "error",
+          "size": "small",
+          "onPress": {
+            "event": {
+              "name": "remove_from_cart",
+              "context": { "id": { "path": "/id" } }
+            }
+          }
+        },
+        {
+          "id": "cartDiv",
+          "component": "Divider"
+        },
+        {
+          "id": "totalRow",
+          "component": "Stack",
+          "direction": "row",
+          "justifyContent": "space-between",
+          "alignItems": "center",
+          "sx": { "mt": 2, "mb": 3 },
+          "children": ["totalLabel", "totalAmt"]
+        },
+        {
+          "id": "totalLabel",
+          "component": "Typography",
+          "variant": "subtitle1",
+          "fontWeight": 600,
+          "text": "Total"
+        },
+        {
+          "id": "totalAmt",
+          "component": "Typography",
+          "variant": "subtitle1",
+          "fontWeight": 700,
+          "text": { "path": "/total" }
+        },
+        {
+          "id": "checkoutBtn",
+          "component": "Button",
+          "label": "Proceed to Checkout",
+          "variant": "contained",
+          "fullWidth": true,
+          "onPress": { "event": { "name": "checkout" } }
+        }
+      ]
+    }
+  },
+  { "createSurface": { "surfaceId": "cart", "root": "root", "catalogId": "mui" } }
+]

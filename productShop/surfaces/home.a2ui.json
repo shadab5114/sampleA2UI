@@ -1,0 +1,171 @@
+[
+  {
+    "updateComponents": {
+      "surfaceId": "home",
+      "components": [
+        {
+          "id": "root",
+          "component": "Container",
+          "maxWidth": "md",
+          "children": ["title", "subtitle", "filterRow", "grid"]
+        },
+        {
+          "id": "title",
+          "component": "Typography",
+          "variant": "h5",
+          "fontWeight": 700,
+          "text": "PhoneHub"
+        },
+        {
+          "id": "subtitle",
+          "component": "Typography",
+          "variant": "body2",
+          "color": "text.secondary",
+          "text": "Find your next phone",
+          "sx": { "mb": 2 }
+        },
+        {
+          "id": "filterRow",
+          "component": "Stack",
+          "direction": "row",
+          "spacing": 1,
+          "sx": { "overflowX": "auto", "pb": 1, "mb": 2, "flexWrap": "nowrap" },
+          "children": [
+            "chipAll", "chipGoogle", "chipApple", "chipSamsung",
+            "chipNothing", "chipXiaomi", "chipMotorola", "chipOnePlus"
+          ]
+        },
+        {
+          "id": "chipAll",
+          "component": "Chip",
+          "label": "All",
+          "color": "primary",
+          "onPress": { "event": { "name": "filter_brand", "context": { "brand": "All" } } }
+        },
+        {
+          "id": "chipGoogle",
+          "component": "Chip",
+          "label": "Google",
+          "variant": "outlined",
+          "onPress": { "event": { "name": "filter_brand", "context": { "brand": "Google" } } }
+        },
+        {
+          "id": "chipApple",
+          "component": "Chip",
+          "label": "Apple",
+          "variant": "outlined",
+          "onPress": { "event": { "name": "filter_brand", "context": { "brand": "Apple" } } }
+        },
+        {
+          "id": "chipSamsung",
+          "component": "Chip",
+          "label": "Samsung",
+          "variant": "outlined",
+          "onPress": { "event": { "name": "filter_brand", "context": { "brand": "Samsung" } } }
+        },
+        {
+          "id": "chipNothing",
+          "component": "Chip",
+          "label": "Nothing",
+          "variant": "outlined",
+          "onPress": { "event": { "name": "filter_brand", "context": { "brand": "Nothing" } } }
+        },
+        {
+          "id": "chipXiaomi",
+          "component": "Chip",
+          "label": "Xiaomi",
+          "variant": "outlined",
+          "onPress": { "event": { "name": "filter_brand", "context": { "brand": "Xiaomi" } } }
+        },
+        {
+          "id": "chipMotorola",
+          "component": "Chip",
+          "label": "Motorola",
+          "variant": "outlined",
+          "onPress": { "event": { "name": "filter_brand", "context": { "brand": "Motorola" } } }
+        },
+        {
+          "id": "chipOnePlus",
+          "component": "Chip",
+          "label": "OnePlus",
+          "variant": "outlined",
+          "onPress": { "event": { "name": "filter_brand", "context": { "brand": "OnePlus" } } }
+        },
+        {
+          "id": "grid",
+          "component": "List",
+          "itemsPath": "/products",
+          "itemTemplate": "card",
+          "columns": 2,
+          "spacing": 12
+        },
+        {
+          "id": "card",
+          "component": "Card",
+          "onPress": { "event": { "name": "view_product", "context": { "id": { "path": "/id" } } } },
+          "children": ["media", "content"]
+        },
+        { "id": "media", "component": "CardMedia", "image": { "path": "/image" }, "height": 120 },
+        {
+          "id": "content",
+          "component": "CardContent",
+          "children": ["pname", "meta", "priceRow"]
+        },
+        {
+          "id": "pname",
+          "component": "Typography",
+          "variant": "subtitle2",
+          "fontWeight": 600,
+          "text": { "path": "/name" }
+        },
+        {
+          "id": "meta",
+          "component": "Stack",
+          "direction": "row",
+          "spacing": 1,
+          "alignItems": "center",
+          "children": ["rating", "cam"]
+        },
+        {
+          "id": "rating",
+          "component": "Rating",
+          "value": { "path": "/rating" },
+          "precision": 0.1,
+          "readOnly": true
+        },
+        {
+          "id": "cam",
+          "component": "Typography",
+          "variant": "caption",
+          "color": "text.secondary",
+          "text": { "path": "/camera" }
+        },
+        {
+          "id": "priceRow",
+          "component": "Stack",
+          "direction": "row",
+          "alignItems": "center",
+          "justifyContent": "space-between",
+          "sx": { "mt": 1 },
+          "children": ["price", "addBtn"]
+        },
+        {
+          "id": "price",
+          "component": "Typography",
+          "variant": "subtitle2",
+          "fontWeight": 700,
+          "text": { "path": "/priceLabel" }
+        },
+        {
+          "id": "addBtn",
+          "component": "Button",
+          "label": "Add",
+          "variant": "contained",
+          "size": "small",
+          "onPress": { "event": { "name": "add_to_cart", "context": { "id": { "path": "/id" } } } }
+        }
+      ]
+    }
+  },
+  { "createSurface": { "surfaceId": "home", "root": "root", "catalogId": "mui" } }
+]

@@ -1,0 +1,144 @@
+{
+  "Container": {
+    "muiComponent": "Container",
+    "category": "layout",
+    "acceptsChildren": true,
+    "props": {
+      "maxWidth": { "type": "enum", "values": ["xs", "sm", "md", "lg", "xl"], "default": "sm" },
+      "py": { "type": "number" }
+    }
+  },
+  "Stack": {
+    "muiComponent": "Stack",
+    "category": "layout",
+    "acceptsChildren": true,
+    "props": {
+      "direction": { "type": "enum", "values": ["row", "column"], "default": "column" },
+      "spacing": { "type": "number", "default": 1 },
+      "alignItems": { "type": "enum", "values": ["flex-start", "center", "flex-end", "stretch", "baseline"] },
+      "justifyContent": { "type": "enum", "values": ["flex-start", "center", "flex-end", "space-between", "space-around"] },
+      "sx": { "type": "object" }
+    }
+  },
+  "Box": {
+    "muiComponent": "Box",
+    "category": "layout",
+    "acceptsChildren": true,
+    "props": { "sx": { "type": "object" } }
+  },
+  "Typography": {
+    "muiComponent": "Typography",
+    "category": "data-display",
+    "acceptsChildren": false,
+    "props": {
+      "text": { "type": "string", "bindable": true },
+      "variant": { "type": "enum", "values": ["h1", "h2", "h3", "h4", "h5", "h6", "subtitle1", "subtitle2", "body1", "body2", "caption", "overline"], "default": "body1" },
+      "color": { "type": "enum", "values": ["primary", "secondary", "text.primary", "text.secondary", "error", "success", "warning"] },
+      "fontWeight": { "type": "number" }
+    }
+  },
+  "Card": {
+    "muiComponent": "Card",
+    "category": "surface",
+    "acceptsChildren": true,
+    "props": { "onPress": { "type": "action" } }
+  },
+  "CardContent": {
+    "muiComponent": "CardContent",
+    "category": "surface",
+    "acceptsChildren": true,
+    "props": {}
+  },
+  "CardMedia": {
+    "muiComponent": "CardMedia",
+    "category": "surface",
+    "acceptsChildren": false,
+    "props": {
+      "image": { "type": "string", "bindable": true },
+      "height": { "type": "number", "default": 120 }
+    }
+  },
+  "Divider": {
+    "muiComponent": "Divider",
+    "category": "layout",
+    "acceptsChildren": false,
+    "props": {}
+  },
+  "Button": {
+    "muiComponent": "Button",
+    "category": "input",
+    "acceptsChildren": false,
+    "props": {
+      "label": { "type": "string", "bindable": true },
+      "variant": { "type": "enum", "values": ["text", "outlined", "contained"], "default": "contained" },
+      "color": { "type": "enum", "values": ["primary", "secondary", "error", "success", "inherit"], "default": "primary" },
+      "size": { "type": "enum", "values": ["small", "medium", "large"], "default": "medium" },
+      "fullWidth": { "type": "boolean" },
+      "onPress": { "type": "action" }
+    }
+  },
+  "Rating": {
+    "muiComponent": "Rating",
+    "category": "input",
+    "acceptsChildren": false,
+    "props": {
+      "value": { "type": "number", "bindable": true },
+      "precision": { "type": "number", "default": 0.5 },
+      "readOnly": { "type": "boolean", "default": true }
+    }
+  },
+  "Chip": {
+    "muiComponent": "Chip",
+    "category": "data-display",
+    "acceptsChildren": false,
+    "props": {
+      "label": { "type": "string", "bindable": true },
+      "color": { "type": "enum", "values": ["default", "primary", "secondary", "success", "warning", "error"], "default": "default" },
+      "variant": { "type": "enum", "values": ["filled", "outlined"], "default": "filled" }
+    }
+  },
+  "TextField": {
+    "muiComponent": "TextField",
+    "category": "input",
+    "acceptsChildren": false,
+    "props": {
+      "label": { "type": "string", "bindable": true },
+      "placeholder": { "type": "string", "bindable": true }
+    }
+  },
+  "Alert": {
+    "muiComponent": "Alert",
+    "category": "feedback",
+    "acceptsChildren": false,
+    "props": {
+      "severity": { "type": "enum", "values": ["info", "success", "warning", "error"], "default": "info" },
+      "message": { "type": "string", "bindable": true }
+    }
+  },
+  "Avatar": {
+    "muiComponent": "Avatar",
+    "category": "data-display",
+    "acceptsChildren": false,
+    "props": {
+      "src": { "type": "string", "bindable": true },
+      "alt": { "type": "string", "bindable": true }
+    }
+  },
+  "LinearProgress": {
+    "muiComponent": "LinearProgress",
+    "category": "feedback",
+    "acceptsChildren": false,
+    "props": { "value": { "type": "number", "bindable": true } }
+  },
+  "List": {
+    "muiComponent": "Box",
+    "category": "layout",
+    "acceptsChildren": false,
+    "props": {
+      "itemsPath": { "type": "string", "description": "Path to an array in the data model; the template renders once per item" },
+      "itemTemplate": { "type": "string", "description": "Component id rendered per item, with that item as the data scope" },
+      "columns": { "type": "number", "default": 2 },
+      "spacing": { "type": "number", "default": 12 }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+[
+  { "id": "pixel-9", "name": "Pixel 9", "brand": "Google", "price": 799, "priceLabel": "£799", "rating": 4.6, "camera": "50MP camera", "storage": "128GB", "image": "/phone.svg" },
+  { "id": "iphone-15", "name": "iPhone 15", "brand": "Apple", "price": 899, "priceLabel": "£899", "rating": 4.8, "camera": "48MP camera", "storage": "128GB", "image": "/phone.svg" },
+  { "id": "galaxy-a55", "name": "Galaxy A55", "brand": "Samsung", "price": 439, "priceLabel": "£439", "rating": 4.4, "camera": "50MP camera", "storage": "128GB", "image": "/phone.svg" },
+  { "id": "nothing-2a", "name": "Nothing Phone 2a", "brand": "Nothing", "price": 319, "priceLabel": "£319", "rating": 4.3, "camera": "50MP camera", "storage": "256GB", "image": "/phone.svg" },
+  { "id": "pixel-8a", "name": "Pixel 8a", "brand": "Google", "price": 499, "priceLabel": "£499", "rating": 4.5, "camera": "64MP camera", "storage": "128GB", "image": "/phone.svg" },
+  { "id": "redmi-note-13", "name": "Redmi Note 13", "brand": "Xiaomi", "price": 279, "priceLabel": "£279", "rating": 4.2, "camera": "108MP camera", "storage": "256GB", "image": "/phone.svg" },
+  { "id": "iphone-15-pro", "name": "iPhone 15 Pro", "brand": "Apple", "price": 1099, "priceLabel": "£1099", "rating": 4.9, "camera": "48MP Pro camera", "storage": "256GB", "image": "/phone.svg" },
+  { "id": "galaxy-s24", "name": "Galaxy S24", "brand": "Samsung", "price": 849, "priceLabel": "£849", "rating": 4.7, "camera": "50MP camera", "storage": "256GB", "image": "/phone.svg" },
+  { "id": "moto-g54", "name": "Moto G54", "brand": "Motorola", "price": 199, "priceLabel": "£199", "rating": 4.0, "camera": "50MP camera", "storage": "128GB", "image": "/phone.svg" },
+  { "id": "oneplus-12r", "name": "OnePlus 12R", "brand": "OnePlus", "price": 649, "priceLabel": "£649", "rating": 4.6, "camera": "50MP camera", "storage": "256GB", "image": "/phone.svg" }
+]
