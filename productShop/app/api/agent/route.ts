@@ -1,41 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { runAgent, CartItemData } from '@/lib/agent/agent';
-import { activeProviderName } from '@/lib/agent/llm';
-import { normalizeContext } from '@/lib/context/channelContext';
+import { handleAgentRequest, ApiError } from '@/lib/api/agentService';
+import { PROTOCOL_VERSION } from '@/lib/api/contract';
+
+// Thin transport adapter: parse HTTP → call the headless service → serialize.
+// All real logic lives in lib/api/agentService.ts (Next-agnostic), so the same
+// core can be mounted as a standalone Node/A2A server for native clients.
 
 export const runtime = 'nodejs';
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const message = typeof body?.message === 'string' ? body.message.trim() : '';
-    const cartItems: CartItemData[] | undefined = Array.isArray(body?.cartItems)
-      ? body.cartItems
-      : undefined;
-
-    // Contextual Awareness: normalise the channel context from the request
-    // (falls back to sensible defaults for any missing/invalid fields).
-    const context = normalizeContext(body?.context);
-
-    if (!message) {
-      return NextResponse.json({ error: 'message is required' }, { status: 400 });
-    }
-
-    // Key check is per-provider — only the active provider's key is required
-    const provider = activeProviderName();
-    const keyName = provider === 'anthropic' ? 'ANTHROPIC_API_KEY' : 'OPENAI_API_KEY';
-    if (!process.env[keyName]) {
+    const result = await handleAgentRequest(body);
+    return NextResponse.json(result);
+  } catch (err) {
+    if (err instanceof ApiError) {
       return NextResponse.json(
-        { error: `${keyName} is not set. Add it to .env.local (LLM_PROVIDER=${provider}).` },
-        { status: 503 },
+        { protocolVersion: PROTOCOL_VERSION, error: { code: err.code, message: err.message } },
+        { status: err.status },
       );
     }
-
-    const { messages, decision } = await runAgent(message, cartItems, context);
-    return NextResponse.json({ messages, decision });
-  } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     console.error('[/api/agent]', message);
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json(
+      { protocolVersion: PROTOCOL_VERSION, error: { code: 'internal_error', message } },
+      { status: 500 },
+    );
   }
 }

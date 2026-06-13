@@ -24,17 +24,31 @@ export interface UserState {
   name?: string;
 }
 
+/** Form factor drives adaptive layout. The client DECLARES this per request. */
+export type FormFactor = 'mobile' | 'tablet' | 'desktop';
+
+/** The client platform calling the API (analytics + structural template hints). */
+export type Platform = 'web' | 'ios' | 'android' | 'rn' | 'flutter';
+
+export interface Viewport {
+  width: number;
+  height?: number;
+}
+
 /** The context object threaded through the whole experience layer. */
 export interface ChannelContext {
   channel: ChannelId;
   journeyStep: JourneyStep;
   userState: UserState;
+  /** Device class that drives server-side layout adaptation. Default 'desktop'. */
+  formFactor: FormFactor;
+  /** Calling platform (web / ios / android / …). Default 'web'. */
+  platform: Platform;
+  /** Optional exact viewport — enables finer width-based adaptation later. */
+  viewport?: Viewport;
   /** Free-form description of what the agent is currently doing (set per turn). */
   agentTaskState?: string;
 }
-
-/** Form factor drives adaptive layout (P3) and policy (P4). */
-export type FormFactor = 'mobile' | 'tablet' | 'desktop';
 
 export interface ChannelMeta {
   id: ChannelId;
@@ -84,6 +98,8 @@ export const DEFAULT_CONTEXT: ChannelContext = {
   channel: 'web',
   journeyStep: 'browsing',
   userState: { authenticated: true, role: 'customer', name: 'Guest' },
+  formFactor: 'desktop',
+  platform: 'web',
 };
 
 export function channelMeta(channel: ChannelId): ChannelMeta {
@@ -112,10 +128,31 @@ export function normalizeContext(input: unknown): ChannelContext {
     name: typeof u.name === 'string' ? u.name : DEFAULT_CONTEXT.userState.name,
   };
 
+  // formFactor is the authoritative device class for layout — explicit, NOT
+  // derived from `channel` (channel is a demo/analytics concept). Default desktop
+  // (the widest/canonical layout) so a client that omits it is never collapsed.
+  const validFactors: FormFactor[] = ['mobile', 'tablet', 'desktop'];
+  const formFactor: FormFactor =
+    ctx.formFactor && validFactors.includes(ctx.formFactor)
+      ? ctx.formFactor
+      : DEFAULT_CONTEXT.formFactor;
+
+  const validPlatforms: Platform[] = ['web', 'ios', 'android', 'rn', 'flutter'];
+  const platform: Platform =
+    ctx.platform && validPlatforms.includes(ctx.platform) ? ctx.platform : DEFAULT_CONTEXT.platform;
+
+  const viewport: Viewport | undefined =
+    ctx.viewport && typeof ctx.viewport.width === 'number'
+      ? { width: ctx.viewport.width, height: typeof ctx.viewport.height === 'number' ? ctx.viewport.height : undefined }
+      : undefined;
+
   return {
     channel,
     journeyStep,
     userState,
+    formFactor,
+    platform,
+    viewport,
     agentTaskState: typeof ctx.agentTaskState === 'string' ? ctx.agentTaskState : undefined,
   };
 }
@@ -126,12 +163,11 @@ export function normalizeContext(input: unknown): ChannelContext {
  * on context in code; here we simply make the agent aware of it.
  */
 export function describeContextForPrompt(ctx: ChannelContext): string {
-  const meta = channelMeta(ctx.channel);
   const who = ctx.userState.role === 'rep' ? 'a store associate assisting a customer' : 'a customer';
   const auth = ctx.userState.authenticated ? 'authenticated' : 'not signed in';
   return [
-    `Channel: ${meta.code} (${meta.label}) — ${meta.description}`,
-    `Form factor: ${meta.formFactor}`,
+    `Platform: ${ctx.platform}`,
+    `Form factor: ${ctx.formFactor} (column counts are adapted downstream — do NOT change layout for this)`,
     `User: ${who}, ${auth}${ctx.userState.name ? ` (${ctx.userState.name})` : ''}`,
     `Journey step: ${ctx.journeyStep}`,
     ctx.agentTaskState ? `Agent task: ${ctx.agentTaskState}` : null,

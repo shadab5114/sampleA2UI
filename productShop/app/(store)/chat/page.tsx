@@ -69,16 +69,21 @@ export default function ChatPage() {
         const res = await fetch('/api/agent', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message, cartItems, context: contextRef.current }),
+          body: JSON.stringify({ message, cart: cartItems, context: contextRef.current }),
         });
         const data = await res.json();
         // Reflect the agent's decided journey step back into the global context
         // so the ChannelBar's "Journey" readout tracks the conversation.
         if (data.decision?.journeyStep) setJourneyStep(data.decision.journeyStep);
+        const errText = data.error
+          ? typeof data.error === 'string'
+            ? data.error
+            : data.error.message
+          : null;
         setTurns((prev) => [
           ...prev,
-          data.error
-            ? { type: 'error' as const, text: data.error }
+          errText
+            ? { type: 'error' as const, text: errText }
             : { type: 'assistant' as const, messages: data.messages, decision: data.decision },
         ]);
       } catch (err) {
