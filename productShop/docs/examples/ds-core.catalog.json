@@ -1,9 +1,9 @@
 {
   "package": {
-    "name": "@vds/core",
+    "name": "@ds/core",
     "version": "2.1.0",
     "catalogVersion": "1.0",
-    "mcp": "https://mcp.vds.com/core/mcp"
+    "mcp": "https://mcp.ds.com/core/mcp"
   },
   "components": {
     "Button": {

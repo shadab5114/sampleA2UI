@@ -5,6 +5,10 @@
 > **any A2UI runtime can drive our components with zero per-component glue.**
 >
 > _(Replace `@ds/core` with the real package name throughout.)_
+>
+> **Multiple packages?** This spec covers a *single* package. For a core library **plus expansion packs**
+> (federation, name collisions, precedence, adopter setup), see
+> [`A2UI-MULTI-PACKAGE-GUIDE.md`](A2UI-MULTI-PACKAGE-GUIDE.md).
 
 ---
 

@@ -1,17 +1,17 @@
 {
   "package": {
-    "name": "@vds-pack/chat",
+    "name": "@ds-pack/chat",
     "version": "1.2.0",
     "catalogVersion": "1.0",
-    "extends": { "package": "@vds/core", "range": ">=2.0.0" },
-    "mcp": "https://mcp.vds.com/chat/mcp"
+    "extends": { "package": "@ds/core", "range": ">=2.0.0" },
+    "mcp": "https://mcp.ds.com/chat/mcp"
   },
   "components": {
     "Button": {
       "type": "object",
       "description": "Chat-optimized button. Extends the core Button with loading/streaming states for conversational surfaces.",
       "$comment": "OVERRIDE of a core component — same name, different package. Declared explicitly via x-a2ui.overrides so the federation treats it as an intentional replacement, not an accidental collision.",
-      "x-a2ui": { "role": "main", "category": "action", "status": "stable", "overrides": "@vds/core:Button" },
+      "x-a2ui": { "role": "main", "category": "action", "status": "stable", "overrides": "@ds/core:Button" },
       "properties": {
         "label":     { "type": "string", "x-a2ui": { "kind": "prop", "bindable": true } },
         "size":      { "type": "string", "enum": ["small", "large"], "default": "large", "x-a2ui": { "kind": "prop" } },
@@ -67,16 +67,16 @@
     "ActionGroup": {
       "type": "object",
       "description": "A horizontal group of suggested actions shown under an assistant message.",
-      "$comment": "Cross-package composition: this chat component accepts a CORE Button. The reference is PACKAGE-QUALIFIED so the federation knows to fetch Button's schema from the @vds/core MCP server.",
+      "$comment": "Cross-package composition: this chat component accepts a CORE Button. The reference is PACKAGE-QUALIFIED so the federation knows to fetch Button's schema from the @ds/core MCP server.",
       "x-a2ui": {
         "role": "main",
         "category": "chat",
         "status": "stable",
-        "accepts": ["@vds/core:Button", "@vds-pack/chat:SuggestionItem"]
+        "accepts": ["@ds/core:Button", "@ds-pack/chat:SuggestionItem"]
       },
       "properties": {
         "align":    { "type": "string", "enum": ["start", "center"], "default": "start", "x-a2ui": { "kind": "prop" } },
-        "children": { "description": "The action buttons / suggestions.", "x-a2ui": { "kind": "slot", "accepts": ["@vds/core:Button", "@vds-pack/chat:SuggestionItem"] } }
+        "children": { "description": "The action buttons / suggestions.", "x-a2ui": { "kind": "slot", "accepts": ["@ds/core:Button", "@ds-pack/chat:SuggestionItem"] } }
       }
     }
   }

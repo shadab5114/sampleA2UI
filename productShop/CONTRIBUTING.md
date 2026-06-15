@@ -7,6 +7,7 @@ Read alongside:
 - [`ARCHITECTURE.md`](ARCHITECTURE.md) — how it works (flows, lifecycle, file map).
 - [`API.md`](API.md) — the client/API contract (for web + native).
 - [`docs/A2UI-DESIGN-SYSTEM-SPEC.md`](docs/A2UI-DESIGN-SYSTEM-SPEC.md) — how a design-system library makes itself A2UI-compatible (the `x-a2ui` metadata the consumer side below reads).
+- [`docs/A2UI-MULTI-PACKAGE-GUIDE.md`](docs/A2UI-MULTI-PACKAGE-GUIDE.md) — core + expansion packs: catalog federation, collision resolution, and how adopters wire multiple packages into one app.
 
 > **The golden rule:** this codebase is built so that **almost every change is additive and lands in
 > exactly one place.** If your change requires editing the shared engine, the protocol, or the API
