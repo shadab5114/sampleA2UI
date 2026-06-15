@@ -1,0 +1,16 @@
+{
+  "$comment": "App / gateway level composition config. PRECEDENCE LIVES HERE, not in the catalogs. A catalog declares its identity + what it overrides; the APP decides which packs are installed and who wins on a collision. Higher precedence wins; here the chat pack overrides core for the conversational experience.",
+  "catalogs": [
+    { "package": "@vds/core",      "mcp": "https://mcp.vds.com/core/mcp", "precedence": 0 },
+    { "package": "@vds-pack/chat", "mcp": "https://mcp.vds.com/chat/mcp", "precedence": 10 }
+  ],
+
+  "$comment_capabilities": "What the CLIENT declares about itself in each /agent request, so the agent only emits components this client can actually render.",
+  "capabilities": {
+    "platform": "ios",
+    "packs": [
+      { "name": "@vds/core",      "version": "2.1.0" },
+      { "name": "@vds-pack/chat", "version": "1.2.0" }
+    ]
+  }
+}

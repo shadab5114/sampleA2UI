@@ -1,0 +1,69 @@
+{
+  "package": {
+    "name": "@vds/core",
+    "version": "2.1.0",
+    "catalogVersion": "1.0",
+    "mcp": "https://mcp.vds.com/core/mcp"
+  },
+  "components": {
+    "Button": {
+      "type": "object",
+      "description": "Primary action button. Use for the main call-to-action in a view.",
+      "x-a2ui": { "role": "main", "category": "action", "status": "stable" },
+      "properties": {
+        "label":    { "type": "string", "description": "Button text.", "x-a2ui": { "kind": "prop", "bindable": true } },
+        "size":     { "type": "string", "enum": ["small", "large"], "default": "large", "description": "Button size.", "x-a2ui": { "kind": "prop" } },
+        "use":      { "type": "string", "enum": ["primary", "secondary"], "default": "primary", "description": "Visual emphasis.", "x-a2ui": { "kind": "prop" } },
+        "disabled": { "type": "boolean", "default": false, "description": "Disable interaction.", "x-a2ui": { "kind": "prop", "bindable": true } },
+        "onClick":  { "description": "Fired on press.", "x-a2ui": { "kind": "event" } }
+      },
+      "required": ["label"]
+    },
+
+    "Tabs": {
+      "type": "object",
+      "description": "Tabbed navigation between sibling sections of content.",
+      "x-a2ui": { "role": "main", "category": "navigation", "status": "stable", "accepts": ["TabItem"] },
+      "properties": {
+        "selectedIndex": { "type": "number", "default": 0, "description": "Active tab index.", "x-a2ui": { "kind": "prop", "bindable": true } },
+        "onChange":      { "description": "Fired when the active tab changes.", "x-a2ui": { "kind": "event" } },
+        "items":         { "type": "array", "items": { "$ref": "#/components/TabItem" }, "description": "Data-driven tabs (alternative to composing TabItem children).", "x-a2ui": { "kind": "data", "bindable": true, "itemComponent": "TabItem" } },
+        "children":      { "description": "Composed TabItem children.", "x-a2ui": { "kind": "slot", "accepts": ["TabItem"] } }
+      }
+    },
+
+    "TabItem": {
+      "type": "object",
+      "description": "A single tab within Tabs, pairing a label with panel content.",
+      "x-a2ui": { "role": "child", "category": "navigation", "childOf": ["Tabs"] },
+      "properties": {
+        "label":    { "type": "string", "description": "Tab label.", "x-a2ui": { "kind": "prop", "bindable": true } },
+        "children": { "description": "Tab panel content.", "x-a2ui": { "kind": "slot" } }
+      },
+      "required": ["label"]
+    },
+
+    "Pagination": {
+      "type": "object",
+      "description": "Page navigation control for paged or chunked content.",
+      "x-a2ui": { "role": "main", "category": "navigation", "status": "stable" },
+      "properties": {
+        "total":        { "type": "number", "description": "Total number of pages.", "x-a2ui": { "kind": "prop", "bindable": true } },
+        "selectedPage": { "type": "number", "default": 1, "description": "Current page (1-based).", "x-a2ui": { "kind": "prop", "bindable": true } },
+        "onChange":     { "description": "Fired when the page changes.", "x-a2ui": { "kind": "event" } }
+      },
+      "required": ["total"]
+    },
+
+    "Text": {
+      "type": "object",
+      "description": "Body or display text.",
+      "x-a2ui": { "role": "main", "category": "content", "status": "stable" },
+      "properties": {
+        "children": { "type": "string", "description": "Text content.", "x-a2ui": { "kind": "prop", "bindable": true } },
+        "size":     { "type": "string", "enum": ["bodySmall", "bodyLarge", "titleMedium"], "default": "bodyLarge", "description": "Type scale.", "x-a2ui": { "kind": "prop" } }
+      },
+      "required": ["children"]
+    }
+  }
+}

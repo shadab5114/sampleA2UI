@@ -1,0 +1,83 @@
+{
+  "package": {
+    "name": "@vds-pack/chat",
+    "version": "1.2.0",
+    "catalogVersion": "1.0",
+    "extends": { "package": "@vds/core", "range": ">=2.0.0" },
+    "mcp": "https://mcp.vds.com/chat/mcp"
+  },
+  "components": {
+    "Button": {
+      "type": "object",
+      "description": "Chat-optimized button. Extends the core Button with loading/streaming states for conversational surfaces.",
+      "$comment": "OVERRIDE of a core component — same name, different package. Declared explicitly via x-a2ui.overrides so the federation treats it as an intentional replacement, not an accidental collision.",
+      "x-a2ui": { "role": "main", "category": "action", "status": "stable", "overrides": "@vds/core:Button" },
+      "properties": {
+        "label":     { "type": "string", "x-a2ui": { "kind": "prop", "bindable": true } },
+        "size":      { "type": "string", "enum": ["small", "large"], "default": "large", "x-a2ui": { "kind": "prop" } },
+        "use":       { "type": "string", "enum": ["primary", "secondary"], "default": "primary", "x-a2ui": { "kind": "prop" } },
+        "loading":   { "type": "boolean", "default": false, "description": "Chat-pack addition: shows an inline spinner.", "x-a2ui": { "kind": "prop", "bindable": true } },
+        "streaming": { "type": "boolean", "default": false, "description": "Chat-pack addition: disabled while a response streams.", "x-a2ui": { "kind": "prop", "bindable": true } },
+        "onClick":   { "x-a2ui": { "kind": "event" } }
+      },
+      "required": ["label"]
+    },
+
+    "Greeting": {
+      "type": "object",
+      "description": "An assistant greeting header with title and optional subtitle, shown at the start of a new conversation.",
+      "x-a2ui": { "role": "main", "category": "chat", "status": "stable" },
+      "properties": {
+        "title":    { "type": "string", "description": "Greeting headline.", "x-a2ui": { "kind": "prop", "bindable": true } },
+        "subtitle": { "type": "string", "description": "Supporting line.", "x-a2ui": { "kind": "prop", "bindable": true } }
+      },
+      "required": ["title"]
+    },
+
+    "AIDisclosure": {
+      "type": "object",
+      "description": "Compliance disclosure that content is AI-generated. Use at the start of an assistant conversation.",
+      "x-a2ui": { "role": "main", "category": "chat", "status": "stable" },
+      "properties": {
+        "text": { "type": "string", "default": "Responses are AI-generated and may be inaccurate.", "description": "Disclosure copy.", "x-a2ui": { "kind": "prop", "bindable": true } }
+      }
+    },
+
+    "SuggestionGroup": {
+      "type": "object",
+      "description": "A set of tappable suggested prompts to start or continue a conversation.",
+      "x-a2ui": { "role": "main", "category": "chat", "status": "stable", "accepts": ["SuggestionItem"] },
+      "properties": {
+        "items":    { "type": "array", "items": { "$ref": "#/components/SuggestionItem" }, "description": "Data-driven suggestions.", "x-a2ui": { "kind": "data", "bindable": true, "itemComponent": "SuggestionItem" } },
+        "children": { "description": "Composed SuggestionItem children.", "x-a2ui": { "kind": "slot", "accepts": ["SuggestionItem"] } }
+      }
+    },
+
+    "SuggestionItem": {
+      "type": "object",
+      "description": "A single suggested-prompt chip.",
+      "x-a2ui": { "role": "child", "category": "chat", "childOf": ["SuggestionGroup", "ActionGroup"] },
+      "properties": {
+        "label":    { "type": "string", "x-a2ui": { "kind": "prop", "bindable": true } },
+        "onSelect": { "description": "Fired when the suggestion is chosen.", "x-a2ui": { "kind": "event" } }
+      },
+      "required": ["label"]
+    },
+
+    "ActionGroup": {
+      "type": "object",
+      "description": "A horizontal group of suggested actions shown under an assistant message.",
+      "$comment": "Cross-package composition: this chat component accepts a CORE Button. The reference is PACKAGE-QUALIFIED so the federation knows to fetch Button's schema from the @vds/core MCP server.",
+      "x-a2ui": {
+        "role": "main",
+        "category": "chat",
+        "status": "stable",
+        "accepts": ["@vds/core:Button", "@vds-pack/chat:SuggestionItem"]
+      },
+      "properties": {
+        "align":    { "type": "string", "enum": ["start", "center"], "default": "start", "x-a2ui": { "kind": "prop" } },
+        "children": { "description": "The action buttons / suggestions.", "x-a2ui": { "kind": "slot", "accepts": ["@vds/core:Button", "@vds-pack/chat:SuggestionItem"] } }
+      }
+    }
+  }
+}
