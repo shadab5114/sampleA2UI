@@ -12,8 +12,11 @@ the contract, so it works for any design system, not just MUI.
 
 ## Inputs to confirm before starting
 
-1. **Figma export** — path to the exported Figma JSON for this flow (a node/file
-   dump). If the user hasn't provided one, ask for it.
+1. **Figma source** — either:
+   - a path to the exported Figma JSON for this flow (a node/file dump), **or**
+   - a **Figma MCP server** to fetch the node tree live. See
+     `references/figma-mcp.md` — it replaces step 1 only; everything else is
+     identical. If the user hasn't provided either, ask which they want.
 2. **Flow name** — e.g. `checkout`; output goes to `surfaces/<flow>.a2ui.json`.
 3. **Catalog(s)** — which catalog this surface targets. Default to
    `productShop/lib/catalog/mui.catalog.json`. The `catalogId` in `createSurface`
@@ -21,11 +24,19 @@ the contract, so it works for any design system, not just MUI.
 
 ## Procedure
 
-### 1. Normalize the export to a Design IR
-Read the Figma JSON and the active catalog. Convert the Figma node tree into the
-small Design IR described in `references/figma-ir.md` (frames→stacks via
-`layoutMode`, TEXT→text, INSTANCE→component+variants, image fills→media, repeated
-siblings→a repeater). Do not skip this step — it keeps the mapping legible.
+### 1. Get the Figma node tree and normalize to a Design IR
+Obtain the Figma node tree, then convert it into the small Design IR described in
+`references/figma-ir.md` (frames→stacks via `layoutMode`, TEXT→text,
+INSTANCE→component+variants, image fills→media, repeated siblings→a repeater).
+Do not skip the IR step — it keeps the mapping legible.
+
+- **From an export file:** read the provided JSON directly.
+- **From a Figma MCP server:** follow `references/figma-mcp.md` — call the node-tree
+  tool (e.g. `mcp__figma__get_figma_data`, or the official `get_metadata`),
+  resolving the target by `fileKey`/`nodeId` or current Figma selection, then
+  normalize its output into the **same** IR.
+
+Either way, also read the active catalog. The rest of the procedure is identical.
 
 ### 2. Load design-system hints (if present)
 If a `<catalogId>.figma-hints.md` exists next to the catalog, read it. It maps the
